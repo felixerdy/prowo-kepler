@@ -43,8 +43,8 @@ export class DataService {
     let dataOut = [];
     for (let i = 0; i < dataIn.length; i++) {
       dataOut.push({
-        lat: dataIn[i].location[0],
-        lng: dataIn[i].location[1],
+        lat: dataIn[i].location[1],
+        lng: dataIn[i].location[0],
         value: Number(dataIn[i].value),
       });
       // console.log(dataOut);
