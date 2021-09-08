@@ -44,12 +44,15 @@ class App extends Component {
       "60c756b948c4b3001b68fb97",
       sensors[0]
     );
+    const nameData = await dataService.getName(
+      "60c756b948c4b3001b68fb97"
+    );
     const keplergldata = await dataService.formatDataForKepler(tempData);
 
     this.setState({
       data: {
         info: {
-          label: "Bike senseBox",
+          label: nameData,
           id: "bike box",
         },
         data: processRowObject(keplergldata),

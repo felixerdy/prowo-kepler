@@ -12,6 +12,15 @@ export class DataService {
 
     return data;
   }
+
+  async getName(boxId) {
+    const data = await this.fetchData(boxId);
+    const name = data.name;
+    
+    return name;
+  }
+
+
   async listAllSensors(boxId) {
     const boxData = await this.fetchData(boxId);
     let boxSensors = [];
