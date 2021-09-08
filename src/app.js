@@ -37,11 +37,17 @@ const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 class App extends Component {
   async componentDidMount() {
     const dataService = new DataService();
-    const sensors = await dataService.listAllSensors("60c756b948c4b3001b68fb97");
-    const tempData = await dataService.getHistory("60c756b948c4b3001b68fb97",sensors[0]);
+    const sensors = await dataService.listAllSensors(
+      "60c756b948c4b3001b68fb97"
+    );
+    const tempData = await dataService.getHistory(
+      "60c756b948c4b3001b68fb97",
+      sensors[0]
+    );
     const keplergldata = await dataService.formatDataForKepler(tempData);
+
     this.setState({
-      data: { 
+      data: {
         info: {
           label: "Bike senseBox",
           id: "bike box",
@@ -52,24 +58,25 @@ class App extends Component {
   }
 
   async componentDidUpdate(prevProps) {
-    if (!prevProps.keplerGl.bar && this.props.keplerGl.bar) {
-       this.props.dispatch(
-         wrapTo(
-           "foo",
-           addDataToMap({
-             datasets: this.state.data,
-             options: {
-               centerMap: true,
-             },
-             config: {
-               mapStyle: {
-                 styleType: "light",
-               },
-             },
-           })
-         )
-       );
-     }
+    if (!prevProps.keplerGl.foo && this.props.keplerGl.foo) {
+      console.log("data", this.state.data);
+      this.props.dispatch(
+        wrapTo(
+          "foo",
+          addDataToMap({
+            datasets: this.state.data,
+            options: {
+              centerMap: true,
+            },
+            config: {
+              mapStyle: {
+                styleType: "light",
+              },
+            },
+          })
+        )
+      );
+    }
   }
   _closeModal = () => {
     this.props.dispatch(showModal(null));
