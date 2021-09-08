@@ -84,10 +84,37 @@ class App extends Component {
     } = this.props;
 
     return (
-      <div style={{ position: "absolute", width: "100%", height: "100%" }}>
-        <button onClick={() => this._openModal("foo")}>
-          Show Kepler.gl id: foo
+      <div style={{ position: "absolute", width: "100%", height: "100%", textAlign: "center", padding: "300px 0px", backgroundColor: "#59595c"}}>
+
+
+        <button style={{backgroundColor: "#f8df81", border: "none", padding: "15px 20px", borderRadius: "12px", margin: "5px"}} onClick={() => this._openModal("foo")}>
+          Heatmap🔥
         </button>
+
+        <button style={{backgroundColor: "#d5b6d5", border: "none", padding: "15px 20px", borderRadius: "12px", margin: "5px"}} onClick={() => this._openModal("foo")}>
+          Beschleunigung🚲
+        </button>
+
+        <button style={{backgroundColor: "#9bd0b7", border: "none", padding: "15px 20px", borderRadius: "12px", margin: "5px"}} onClick={() => this._openModal("foo")}>
+          GPS-Sensor🌐
+        </button>
+
+        <button style={{backgroundColor: "#f6b4bf", border: "none", padding: "15px 20px", borderRadius: "12px", margin: "5px"}} onClick={() => this._openModal("foo")}>
+          Temperatur- und Luftfeuchtigkeitssensor🌡️
+        </button>
+
+        <button style={{backgroundColor: "#badfda", border: "none", padding: "15px 20px", borderRadius: "12px", margin: "5px"}} onClick={() => this._openModal("foo")}>
+          UV und Beleuchtungsstärke☀️
+        </button>
+
+        <button style={{backgroundColor: "#dab894", border: "none", padding: "15px 20px", borderRadius: "12px", margin: "5px"}} onClick={() => this._openModal("foo")}>
+          Luftdruck🎈
+        </button>
+
+        <button style={{backgroundColor: "#dcfffb", border: "none", padding: "15px 20px", borderRadius: "12px", margin: "5px"}} onClick={() => this._openModal("foo")}>
+          Feinstaub💨
+        </button>
+
         {/* <button onClick={() => this._openModal("bar")}>
           Show Kepler.gl id: bar
         </button> */}
