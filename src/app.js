@@ -37,17 +37,10 @@ const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 class App extends Component {
   async componentDidMount() {
     const dataService = new DataService();
-    const sensors = await dataService.listAllSensors(
-      "60c756b948c4b3001b68fb97"
-    );
-    const tempData = await dataService.getHistory(
-      "60c756b948c4b3001b68fb97",
-      sensors[0]
-    );
     const nameData = await dataService.getName(
       "60c756b948c4b3001b68fb97"
     );
-    const keplergldata = await dataService.formatDataForKepler(tempData);
+    const keplergldata = await dataService.dataService("60c756b948c4b3001b68fb97");
 
     this.setState({
       data: {

@@ -51,4 +51,16 @@ export class DataService {
     }
     return dataOut;
   }
+  async dataService(boxId){
+    const sensors = await this.listAllSensors(
+      boxId
+    );
+    const tempData = await this.getHistory(
+      boxId,
+      sensors[0]
+    );
+    const data = await this.formatDataForKepler(tempData);
+
+    return data;
+  }
 }
