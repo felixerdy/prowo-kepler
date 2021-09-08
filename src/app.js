@@ -28,47 +28,48 @@ import sampleData from "./data/sample-data";
 
 import FreshMap from "./components/fresh-map";
 import { DataService } from "./services/data-service";
+import { processRowObject } from "kepler.gl/dist/processors";
+
 // import SavedMap from "./components/saved-map";
 
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 
 class App extends Component {
-  componentDidMount() {
+  async componentDidMount() {
+    const dataService = new DataService();
+    const sensors = await dataService.listAllSensors("60c756b948c4b3001b68fb97");
+    const tempData = await dataService.getHistory("60c756b948c4b3001b68fb97",sensors[0]);
+    const keplergldata = await dataService.formatDataForKepler(tempData);
     this.setState({
-      dataService: new DataService(),
+      data: { 
+        info: {
+          label: "Bike senseBox",
+          id: "bike box",
+        },
+        data: processRowObject(keplergldata),
+      },
     });
   }
 
   async componentDidUpdate(prevProps) {
-    console.log(this.state);
-    if (this.state.dataService) {
-      const data = await this.state.dataService.getData(
-        "60c756b948c4b3001b68fb97"
-      );
-      console.log(data);
-      const sensors = await this.state.dataService.listAllSensors(
-        "60c756b948c4b3001b68fb97"
-      );
-      console.log(sensors);
-    }
-    // if (!prevProps.keplerGl.bar && this.props.keplerGl.bar) {
-    //   this.props.dispatch(
-    //     wrapTo(
-    //       "bar",
-    //       addDataToMap({
-    //         datasets: sampleData,
-    //         options: {
-    //           centerMap: true,
-    //         },
-    //         config: {
-    //           mapStyle: {
-    //             styleType: "light",
-    //           },
-    //         },
-    //       })
-    //     )
-    //   );
-    // }
+    if (!prevProps.keplerGl.bar && this.props.keplerGl.bar) {
+       this.props.dispatch(
+         wrapTo(
+           "foo",
+           addDataToMap({
+             datasets: this.state.data,
+             options: {
+               centerMap: true,
+             },
+             config: {
+               mapStyle: {
+                 styleType: "light",
+               },
+             },
+           })
+         )
+       );
+     }
   }
   _closeModal = () => {
     this.props.dispatch(showModal(null));

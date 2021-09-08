@@ -14,9 +14,33 @@ export class DataService {
     }
     async listAllSensors(boxId){
       const boxData = await this.fetchData(boxId);
-
-      const boxSensors = boxData.sensors[0]._id;
+      let boxSensors = [];
+      for (let i = 0; i < boxData.sensors.length;i++){
+        boxSensors[i] = boxData.sensors[i]._id;
+      }
       return boxSensors;
+    }
+    async getHistory(boxId,sensorId){
+      const historyReq = await fetch(`https://api.opensensemap.org/boxes/${boxId}/data/${sensorId}?from-date=2021-08-15T23:50:50.52Z`);
+
+      const history = await historyReq.json();
+
+      return history
+    }
+    async formatDataForKepler(dataIn){
+      console.log(dataIn);
+      let dataOut =[]
+      for(let i=0; i < dataIn.length; i++){
+        dataOut.push(
+          {
+            "lat":dataIn[i].location[0],
+            "lng":dataIn[i].location[1],
+            "value":Number(dataIn[i].value)
+          }
+        )
+        console.log(dataOut);
+      }
+      return dataOut;
     }
 
 }
