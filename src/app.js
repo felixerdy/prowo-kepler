@@ -39,9 +39,17 @@ class App extends Component {
     });
   }
 
-  componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps) {
+    console.log(this.state);
     if (this.state.dataService) {
-      console.log(this.state.dataService.getData());
+      const data = await this.state.dataService.getData(
+        "60c756b948c4b3001b68fb97"
+      );
+      console.log(data);
+      const sensors = await this.state.dataService.listAllSensors(
+        "60c756b948c4b3001b68fb97"
+      );
+      console.log(sensors);
     }
     // if (!prevProps.keplerGl.bar && this.props.keplerGl.bar) {
     //   this.props.dispatch(

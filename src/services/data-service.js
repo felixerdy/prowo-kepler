@@ -1,9 +1,22 @@
 export class DataService {
-  getData() {
-    return "Hello World";
-  }
+    async fetchData(boxId){
+      const boxRequest = await fetch(
+        `https://api.opensensemap.org/boxes/${boxId}?format=json`
+      );
+      const data = await boxRequest.json();
 
-  filter() {}
+      return data;
+    }
+    async getData(boxId){
+      const data = await this.fetchData(boxId);
 
-  clean() {}
+      return data;
+    }
+    async listAllSensors(boxId){
+      const boxData = await this.fetchData(boxId);
+
+      const boxSensors = boxData.sensors[0]._id;
+      return boxSensors;
+    }
+
 }
