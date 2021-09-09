@@ -59,7 +59,10 @@ const CONFIG = {
   plugins: [
     new webpack.EnvironmentPlugin(["MapboxAccessToken"]),
     new CopyPlugin({
-      patterns: [{ from: "./index.html", to: "" }],
+      patterns: [
+        { from: "./index.html", to: "" },
+        { from: "./afglogo.png", to: "" },
+      ],
     }),
   ],
 };
