@@ -35,58 +35,58 @@ import { processRowObject } from "kepler.gl/dist/processors";
 import styled from "styled-components";
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 
-const Button= styled.button` 
-background-color: ${props => props.buttonColor}; 
-border: none;
-padding: 15px 20px; 
-border-radius: 12px; 
-margin: 5px;
-font-size: 25px;
-font-weight: bold;
-transition: all 1s;
+const Button = styled.button`
+  background-color: ${(props) => props.buttonColor};
+  border: none;
+  padding: 15px 20px;
+  border-radius: 12px;
+  margin: 5px;
+  font-size: 25px;
+  font-weight: bold;
+  transition: all 1s;
 
+  &:hover {
+    background-color: #000;
+    cursor: pointer;
+    color: #fff;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.34),
+      0 17px 50px 0 rgba(0, 0, 0, 0.29);
+  }
+`;
 
+const Closebutton = styled.button`
+  background-color: ${(props) => props.buttonColor};
+  border: none;
+  padding: 15px 20px;
+  border-radius: 16px;
+  margin: 5px;
+  font-size: 20px;
+  font-weight: bold;
+  transition: all 1s;
 
-
-&:hover{
-  background-color: #000;
-  cursor: pointer;
-  color: #fff;
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.34), 0 17px 50px 0 rgba(0,0,0,0.29);
-`
-const Closebutton= styled.button` 
-background-color: ${props => props.buttonColor}; 
-border: none;
-padding: 15px 20px; 
-border-radius: 16px; 
-margin: 5px;
-font-size: 20px;
-font-weight: bold;
-transition: all 1s;
-
-&:hover{
-  background-color: transparent;
-  cursor: pointer;
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.34), 0 17px 50px 0 rgba(0,0,0,0.29);
-`
-
-
-
-
-
-
+  &:hover {
+    background-color: transparent;
+    cursor: pointer;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.34),
+      0 17px 50px 0 rgba(0, 0, 0, 0.29);
+  }
+`;
 
 class App extends Component {
   async componentDidMount() {
     const dataService = new DataService();
-    const nameData = await dataService.getName(
-      "6139b33384c610001ca8efd4"
+    const nameData = await dataService.getName("6139b33384c610001ca8efd4");
+    const keplerglhumidata = await dataService.dataService(
+      ["6139b33384c610001ca8efd4", "6138914684c610001c260ef5"],
+      "rel. Luftfeuchte"
     );
-    const keplerglhumidata = await dataService.dataService(["6139b33384c610001ca8efd4","6138914684c610001c260ef5"],"rel. Luftfeuchte");
-    const keplergltempdata = await dataService.dataService(["6139b33384c610001ca8efd4","6138914684c610001c260ef5"],"Temperatur");
-  
+    const keplergltempdata = await dataService.dataService(
+      ["6139b33384c610001ca8efd4", "6138914684c610001c260ef5"],
+      "Temperatur"
+    );
+
     this.setState({
-      data1: { 
+      data1: {
         info: {
           label: "Temperatur",
           id: "temp_map",
@@ -118,7 +118,6 @@ class App extends Component {
               mapStyle: {
                 styleType: "dark",
               },
-
             },
           })
         )
@@ -158,41 +157,100 @@ class App extends Component {
     } = this.props;
 
     return (
-        <div style={{ position: "absolute", width: "100%", height: "100%", textAlign: "center", backgroundColor: "rgba(168,168,189,46)"}}>
-      <div style={{display: "flex", height: "100px", marginBottom: "100px", justifyContent: "space-evenly", padding: "10px", backgroundColor: "rgba(168,168,189,46)"}}>
-        <a href="https://www.uni-muenster.de/Geoinformatics/" target="_blank"><img src="https://digitalautonomy.net/fileadmin/_processed_/d/4/csm_1623743845_DAH_Logo_ifgi_long_2b4c356743.png" alt="ifgi Logo" style={{height: "100%"}}/></a>
-        <a href="https://www.afg-havixbeck-billerbeck.de/index.php" target="_blank"><img src="./afglogo.png" alt="Afg Logo" style={{height: "100%"}}/></a>
+      <div
+        style={{
+          position: "absolute",
+          width: "100%",
+          height: "100%",
+          textAlign: "center",
+          backgroundColor: "rgba(168,168,189,46)",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            height: "100px",
+            marginBottom: "100px",
+            justifyContent: "space-evenly",
+            padding: "10px",
+            backgroundColor: "rgba(168,168,189,46)",
+          }}
+        >
+          <a href="https://www.uni-muenster.de/Geoinformatics/" target="_blank">
+            <img
+              src="https://digitalautonomy.net/fileadmin/_processed_/d/4/csm_1623743845_DAH_Logo_ifgi_long_2b4c356743.png"
+              alt="ifgi Logo"
+              style={{ height: "100%" }}
+            />
+          </a>
+          <a
+            href="https://www.afg-havixbeck-billerbeck.de/index.php"
+            target="_blank"
+          >
+            <img
+              src="./afglogo.png"
+              alt="Afg Logo"
+              style={{ height: "100%" }}
+            />
+          </a>
+        </div>
 
-      </div>
-
-      <h1 style={{color: "white", fontFamily: "helvetica"}}>
-        <b>Klimadaten der senseBox-Fahrräder</b>
+        <h1 style={{ color: "white", fontFamily: "helvetica" }}>
+          <b>Klimadaten der senseBox-Fahrräder</b>
         </h1>
 
+        <Button buttonColor="#f8df81" onClick={() => this._openModal("foo")}>
+          {" "}
+          Heatmap🔥{" "}
+        </Button>
+        <Button buttonColor="#d5b6d5" onClick={() => this._openModal("foo")}>
+          {" "}
+          Beschleunigung🚲{" "}
+        </Button>
+        <Button buttonColor="#f6b4bf" onClick={() => this._openModal("foo")}>
+          {" "}
+          Temperatur- und Luftfeuchtigkeitssensor🌡️{" "}
+        </Button>
+        <Button buttonColor="#badfda" onClick={() => this._openModal("foo")}>
+          {" "}
+          UV und Beleuchtungsstärke☀️{" "}
+        </Button>
+        <Button buttonColor="#dab894" onClick={() => this._openModal("foo")}>
+          {" "}
+          Luftdruck🎈{" "}
+        </Button>
+        <Button buttonColor="#dcfffb" onClick={() => this._openModal("foo")}>
+          {" "}
+          Feinstaub💨{" "}
+        </Button>
 
-      <Button buttonColor= "#f8df81" onClick={() => this._openModal("foo")}> Heatmap🔥 </Button>
-      <Button buttonColor= "#d5b6d5" onClick={() => this._openModal("foo")}> Beschleunigung🚲 </Button>
-      <Button buttonColor= "#f6b4bf" onClick={() => this._openModal("foo")}> Temperatur- und Luftfeuchtigkeitssensor🌡️ </Button>
-      <Button buttonColor= "#badfda" onClick={() => this._openModal("foo")}> UV und Beleuchtungsstärke☀️ </Button>
-      <Button buttonColor= "#dab894" onClick={() => this._openModal("foo")}> Luftdruck🎈 </Button>
-      <Button buttonColor= "#dcfffb" onClick={() => this._openModal("foo")}> Feinstaub💨 </Button>
-
-
-        <h4 style={{color: "white", fontFamily: "helvetica"}}>
-        Unsere Ergebnisse der Projektwoche am ifgi!
+        <h4 style={{ color: "white", fontFamily: "helvetica" }}>
+          Unsere Ergebnisse der Projektwoche am ifgi!
         </h4>
 
         {/* <button onClick={() => this._openModal("bar")}>
           Show Kepler.gl id: bar
         </button> */}
 
-        <Modal isOpen={modal === "foo"} style={{content: {padding: "0"}}}>
-        <div style={{display: "flex", height: "50px", justifyContent: "space-evenly", alignItems: "center", padding: "10px", backgroundColor: "rgba(168,168,189,46)", fontFamily:"helvetica", fontSize: "16px"}}>
-
+        <Modal isOpen={modal === "foo"} style={{ content: { padding: "0" } }}>
+          <div
+            style={{
+              display: "flex",
+              height: "50px",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+              padding: "10px",
+              backgroundColor: "rgba(168,168,189,46)",
+              fontFamily: "helvetica",
+              fontSize: "16px",
+            }}
+          >
             This Kepler.gl component will always load a fresh state when re
             mounted, state inside this component will be destroyed once its
             unmounted.
-          <Closebutton buttonColor= "transparent" onClick={this._closeModal}>❌</Closebutton>
+            <Closebutton buttonColor="transparent" onClick={this._closeModal}>
+              ❌
+            </Closebutton>
           </div>
           <FreshMap
             dispatch={this.props.dispatch}
@@ -201,9 +259,7 @@ class App extends Component {
           />
         </Modal>
         <Modal isOpen={modal === "bar"}>
-          <div>
-            Luftfeuchte
-          </div>
+          <div>Luftfeuchte</div>
           <button onClick={this._closeModal}>Close</button>
           <FreshMap
             dispatch={this.props.dispatch}
