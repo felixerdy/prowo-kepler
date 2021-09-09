@@ -77,19 +77,39 @@ class App extends Component {
     const dataService = new DataService();
     const nameData = await dataService.getName("6139b33384c610001ca8efd4");
     const keplerglhumidata = await dataService.dataService(
-      ["6139b33384c610001ca8efd4", "6138914684c610001c260ef5","6138911084c610001c25f671","6139b3e984c610001ca940f8"],
+      [
+        "6139b33384c610001ca8efd4",
+        "6138914684c610001c260ef5",
+        "6138911084c610001c25f671",
+        "6139b3e984c610001ca940f8",
+      ],
       "rel. Luftfeuchte"
     );
     const keplergltempdata = await dataService.dataService(
-      ["6139b33384c610001ca8efd4", "6138914684c610001c260ef5","6138911084c610001c25f671",,"6139b3e984c610001ca940f8"],
+      [
+        "6139b33384c610001ca8efd4",
+        "6138914684c610001c260ef5",
+        "6138911084c610001c25f671",
+        "6139b3e984c610001ca940f8",
+      ],
       "Temperatur"
     );
     const keplergluvdata = await dataService.dataService(
-      ["6139b33384c610001ca8efd4", "6138914684c610001c260ef5","6138911084c610001c25f671","6139b3e984c610001ca940f8"],
+      [
+        "6139b33384c610001ca8efd4",
+        "6138914684c610001c260ef5",
+        "6138911084c610001c25f671",
+        "6139b3e984c610001ca940f8",
+      ],
       "UV-Intensität"
     );
     const keplergllightdata = await dataService.dataService(
-      ["6139b33384c610001ca8efd4", "6138914684c610001c260ef5","6138911084c610001c25f671","6139b3e984c610001ca940f8"],
+      [
+        "6139b33384c610001ca8efd4",
+        "6138914684c610001c260ef5",
+        "6138911084c610001c25f671",
+        "6139b3e984c610001ca940f8",
+      ],
       "Beleuchtungsstärke"
     );
     const keplerglpmdata = await dataService.dataService(
@@ -289,19 +309,25 @@ class App extends Component {
           <b>Klimadaten der senseBox-Fahrräder</b>
         </h1>
 
-{/*        <Button buttonColor="#f8df81" onClick={() => this._openModal("heatmap")}>
+        {/*        <Button buttonColor="#f8df81" onClick={() => this._openModal("heatmap")}>
           {" "}
           Heatmap🔥{" "}
         </Button> */}
-{/*}        <Button buttonColor="#d5b6d5" onClick={() => this._openModal("beschleunigung")}>
+        {/*}        <Button buttonColor="#d5b6d5" onClick={() => this._openModal("beschleunigung")}>
           {" "}
           Beschleunigung🚲{" "}
         </Button> */}
-        <Button buttonColor="#D7F4D2" onClick={() => this._openModal("luftfeuchte")}>
+        <Button
+          buttonColor="#D7F4D2"
+          onClick={() => this._openModal("luftfeuchte")}
+        >
           {" "}
           Luftfeuchtigkeitssensor💧{" "}
         </Button>
-        <Button buttonColor="#f6b4bf" onClick={() => this._openModal("temperatur")}>
+        <Button
+          buttonColor="#f6b4bf"
+          onClick={() => this._openModal("temperatur")}
+        >
           {" "}
           Temperatursensor🌡️{" "}
         </Button>
@@ -313,11 +339,14 @@ class App extends Component {
           {" "}
           UV☀️{" "}
         </Button>
-{/*       <Button buttonColor="#dab894" onClick={() => this._openModal("pressure")}>
+        {/*       <Button buttonColor="#dab894" onClick={() => this._openModal("pressure")}>
           {" "}
           Luftdruck🎈{" "}
         </Button>*/}
-        <Button buttonColor="#dcfffb" onClick={() => this._openModal("feinstaub")}>
+        <Button
+          buttonColor="#dcfffb"
+          onClick={() => this._openModal("feinstaub")}
+        >
           {" "}
           Feinstaub💨{" "}
         </Button>
@@ -329,8 +358,11 @@ class App extends Component {
         {/* <button onClick={() => this._openModal("bar")}>
           Show Kepler.gl id: bar
         </button> */}
-{/*begin Modals*/}
-        <Modal isOpen={modal === "heatmap"} style={{ content: { padding: "0" } }}>
+        {/*begin Modals*/}
+        <Modal
+          isOpen={modal === "heatmap"}
+          style={{ content: { padding: "0" } }}
+        >
           <div
             style={{
               display: "flex",
@@ -354,7 +386,10 @@ class App extends Component {
             id="heatmap"
           />
         </Modal>
-        <Modal isOpen={modal === "beschleunigung"} style={{ content: { padding: "0" } }}>
+        <Modal
+          isOpen={modal === "beschleunigung"}
+          style={{ content: { padding: "0" } }}
+        >
           <div
             style={{
               display: "flex",
@@ -378,7 +413,10 @@ class App extends Component {
             id="beschleungigung"
           />
         </Modal>
-        <Modal isOpen={modal === "luftfeuchte"} style={{ content: { padding: "0" } }}>
+        <Modal
+          isOpen={modal === "luftfeuchte"}
+          style={{ content: { padding: "0" } }}
+        >
           <div
             style={{
               display: "flex",
@@ -404,7 +442,10 @@ class App extends Component {
             id="luftfeuchte"
           />
         </Modal>
-        <Modal isOpen={modal === "temperatur"} style={{ content: { padding: "0" } }}>
+        <Modal
+          isOpen={modal === "temperatur"}
+          style={{ content: { padding: "0" } }}
+        >
           <div
             style={{
               display: "flex",
@@ -465,7 +506,7 @@ class App extends Component {
               fontSize: "16px",
             }}
           >
-          UV-Intensität 
+            UV-Intensität
             <Closebutton buttonColor="transparent" onClick={this._closeModal}>
               ❌
             </Closebutton>
@@ -476,7 +517,10 @@ class App extends Component {
             id="uv"
           />
         </Modal>
-        <Modal isOpen={modal === "pressure"} style={{ content: { padding: "0" } }}>
+        <Modal
+          isOpen={modal === "pressure"}
+          style={{ content: { padding: "0" } }}
+        >
           <div
             style={{
               display: "flex",
@@ -500,7 +544,10 @@ class App extends Component {
             id="pressure"
           />
         </Modal>
-        <Modal isOpen={modal === "feinstaub"} style={{ content: { padding: "0" } }}>
+        <Modal
+          isOpen={modal === "feinstaub"}
+          style={{ content: { padding: "0" } }}
+        >
           <div
             style={{
               display: "flex",
