@@ -30,7 +30,48 @@ import FreshMap from "./components/fresh-map";
 import { DataService } from "./services/data-service";
 // import SavedMap from "./components/saved-map";
 
+import styled from "styled-components";
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
+
+const Button= styled.button` 
+background-color: ${props => props.buttonColor}; 
+border: none;
+padding: 15px 20px; 
+border-radius: 12px; 
+margin: 5px;
+font-size: 25px;
+font-weight: bold;
+transition: all 1s;
+
+
+
+
+&:hover{
+  background-color: #000;
+  cursor: pointer;
+  color: #fff;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.34), 0 17px 50px 0 rgba(0,0,0,0.29);
+`
+const Closebutton= styled.button` 
+background-color: ${props => props.buttonColor}; 
+border: none;
+padding: 15px 20px; 
+border-radius: 16px; 
+margin: 5px;
+font-size: 20px;
+font-weight: bold;
+
+&:hover{
+  background-color: transparent;
+  cursor: pointer;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.34), 0 17px 50px 0 rgba(0,0,0,0.29);
+`
+
+
+
+
+
+
 
 class App extends Component {
   componentDidMount() {
@@ -84,48 +125,43 @@ class App extends Component {
     } = this.props;
 
     return (
-      <div style={{ position: "absolute", width: "100%", height: "100%", textAlign: "center", padding: "300px 0px", backgroundColor: "#59595c"}}>
+        <div style={{ position: "absolute", width: "100%", height: "100%", textAlign: "center", backgroundColor: "rgba(168,168,189,46)"}}>
+      <div style={{display: "flex", height: "100px", marginBottom: "100px", justifyContent: "space-evenly", padding: "10px", backgroundColor: "rgba(168,168,189,46)"}}>
+        <a href="https://www.uni-muenster.de/Geoinformatics/" target="_blank"><img src="https://digitalautonomy.net/fileadmin/_processed_/d/4/csm_1623743845_DAH_Logo_ifgi_long_2b4c356743.png" alt="ifgi Logo" style={{height: "100%"}}/></a>
+        <a href="https://www.afg-havixbeck-billerbeck.de/index.php" target="_blank"><img src="./afglogo.png" alt="Afg Logo" style={{height: "100%"}}/></a>
+
+      </div>
+
+      <h1 style={{color: "white", fontFamily: "helvetica"}}>
+        <b>Klimadaten der senseBox-Fahrräder</b>
+        </h1>
 
 
-        <button style={{backgroundColor: "#f8df81", border: "none", padding: "15px 20px", borderRadius: "12px", margin: "5px"}} onClick={() => this._openModal("foo")}>
-          Heatmap🔥
-        </button>
+      <Button buttonColor= "#f8df81" onClick={() => this._openModal("foo")}> Heatmap🔥 </Button>
+      <Button buttonColor= "#d5b6d5" onClick={() => this._openModal("foo")}> Beschleunigung🚲 </Button>
+      <Button buttonColor= "#f6b4bf" onClick={() => this._openModal("foo")}> Temperatur- und Luftfeuchtigkeitssensor🌡️ </Button>
+      <Button buttonColor= "#badfda" onClick={() => this._openModal("foo")}> UV und Beleuchtungsstärke☀️ </Button>
+      <Button buttonColor= "#dab894" onClick={() => this._openModal("foo")}> Luftdruck🎈 </Button>
+      <Button buttonColor= "#dcfffb" onClick={() => this._openModal("foo")}> Feinstaub💨 </Button>
 
-        <button style={{backgroundColor: "#d5b6d5", border: "none", padding: "15px 20px", borderRadius: "12px", margin: "5px"}} onClick={() => this._openModal("foo")}>
-          Beschleunigung🚲
-        </button>
 
-        <button style={{backgroundColor: "#9bd0b7", border: "none", padding: "15px 20px", borderRadius: "12px", margin: "5px"}} onClick={() => this._openModal("foo")}>
-          GPS-Sensor🌐
-        </button>
+        <h4 style={{color: "white", fontFamily: "helvetica"}}>
+        Unsere Ergebnisse der Projektwoche am ifgi!
+        </h4>
 
-        <button style={{backgroundColor: "#f6b4bf", border: "none", padding: "15px 20px", borderRadius: "12px", margin: "5px"}} onClick={() => this._openModal("foo")}>
-          Temperatur- und Luftfeuchtigkeitssensor🌡️
-        </button>
-
-        <button style={{backgroundColor: "#badfda", border: "none", padding: "15px 20px", borderRadius: "12px", margin: "5px"}} onClick={() => this._openModal("foo")}>
-          UV und Beleuchtungsstärke☀️
-        </button>
-
-        <button style={{backgroundColor: "#dab894", border: "none", padding: "15px 20px", borderRadius: "12px", margin: "5px"}} onClick={() => this._openModal("foo")}>
-          Luftdruck🎈
-        </button>
-
-        <button style={{backgroundColor: "#dcfffb", border: "none", padding: "15px 20px", borderRadius: "12px", margin: "5px"}} onClick={() => this._openModal("foo")}>
-          Feinstaub💨
-        </button>
 
         {/* <button onClick={() => this._openModal("bar")}>
           Show Kepler.gl id: bar
         </button> */}
 
-        <Modal isOpen={modal === "foo"}>
-          <div>
+        <Modal isOpen={modal === "foo"} style={{content: {padding: "0"}}}>
+        <div style={{display: "flex", height: "50px", justifyContent: "space-evenly", alignItems: "center", padding: "10px", backgroundColor: "rgba(168,168,189,46)", fontFamily:"helvetica", fontSize: "16px"}}>
+
             This Kepler.gl component will always load a fresh state when re
             mounted, state inside this component will be destroyed once its
             unmounted.
+          <Closebutton buttonColor= "transparent" onClick={this._closeModal}>❌</Closebutton>
           </div>
-          <button onClick={this._closeModal}>Close</button>
           <FreshMap
             dispatch={this.props.dispatch}
             mapboxApiAccessToken={MAPBOX_TOKEN}
