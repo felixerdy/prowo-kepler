@@ -77,40 +77,73 @@ class App extends Component {
     const dataService = new DataService();
     const nameData = await dataService.getName("6139b33384c610001ca8efd4");
     const keplerglhumidata = await dataService.dataService(
-      ["6139b33384c610001ca8efd4", "6138914684c610001c260ef5"],
+      ["6139b33384c610001ca8efd4", "6138914684c610001c260ef5","6138911084c610001c25f671","6139b3e984c610001ca940f8"],
       "rel. Luftfeuchte"
     );
     const keplergltempdata = await dataService.dataService(
-      ["6139b33384c610001ca8efd4", "6138914684c610001c260ef5"],
+      ["6139b33384c610001ca8efd4", "6138914684c610001c260ef5","6138911084c610001c25f671",,"6139b3e984c610001ca940f8"],
       "Temperatur"
+    );
+    const keplergluvdata = await dataService.dataService(
+      ["6139b33384c610001ca8efd4", "6138914684c610001c260ef5","6138911084c610001c25f671","6139b3e984c610001ca940f8"],
+      "UV-Intensität"
+    );
+    const keplergllightdata = await dataService.dataService(
+      ["6139b33384c610001ca8efd4", "6138914684c610001c260ef5","6138911084c610001c25f671","6139b3e984c610001ca940f8"],
+      "Beleuchtungsstärke"
+    );
+    const keplerglpmdata = await dataService.dataService(
+      ["6139b33384c610001ca8efd4"],
+      "PM2.5"
     );
 
     this.setState({
-      data1: {
+      temperatur: {
         info: {
           label: "Temperatur",
           id: "temp_map",
         },
         data: processRowObject(keplergltempdata),
       },
-      data2: {
+      humi: {
         info: {
           label: "Luftfeuchte",
           id: "humi_map",
         },
         data: processRowObject(keplerglhumidata),
       },
+      uv: {
+        info: {
+          label: "UV-Intensität",
+          id: "uv_map",
+        },
+        data: processRowObject(keplergluvdata),
+      },
+      light: {
+        info: {
+          label: "Beleuchtungsstärke",
+          id: "light_map",
+        },
+        data: processRowObject(keplergllightdata),
+      },
+      pm: {
+        info: {
+          label: "Feinstaub",
+          id: "pm_map",
+        },
+        data: processRowObject(keplerglpmdata),
+      },
     });
   }
 
   async componentDidUpdate(prevProps) {
-    if (!prevProps.keplerGl.foo && this.props.keplerGl.foo) {
+    if (!prevProps.keplerGl.temperatur && this.props.keplerGl.temperatur) {
       //console.log("data", this.state.data);
       this.props.dispatch(
         wrapTo(
-          "foo",
+          "temperatur",
           addDataToMap({
-            datasets: [this.state.data1],
+            datasets: [this.state.temperatur],
             options: {
               centerMap: true,
             },
@@ -123,19 +156,76 @@ class App extends Component {
         )
       );
     }
-    if (!prevProps.keplerGl.bar && this.props.keplerGl.bar) {
+    if (!prevProps.keplerGl.luftfeuchte && this.props.keplerGl.luftfeuchte) {
       //console.log("data", this.state.data);
       this.props.dispatch(
         wrapTo(
-          "bar",
+          "luftfeuchte",
           addDataToMap({
-            datasets: [this.state.data2],
+            datasets: [this.state.humi],
             options: {
               centerMap: true,
             },
             config: {
               mapStyle: {
-                styleType: "light",
+                styleType: "dark",
+              },
+            },
+          })
+        )
+      );
+    }
+    if (!prevProps.keplerGl.light && this.props.keplerGl.light) {
+      //console.log("data", this.state.data);
+      this.props.dispatch(
+        wrapTo(
+          "light",
+          addDataToMap({
+            datasets: [this.state.light],
+            options: {
+              centerMap: true,
+            },
+            config: {
+              mapStyle: {
+                styleType: "dark",
+              },
+            },
+          })
+        )
+      );
+    }
+    if (!prevProps.keplerGl.uv && this.props.keplerGl.uv) {
+      //console.log("data", this.state.data);
+      this.props.dispatch(
+        wrapTo(
+          "uv",
+          addDataToMap({
+            datasets: [this.state.uv],
+            options: {
+              centerMap: true,
+            },
+            config: {
+              mapStyle: {
+                styleType: "dark",
+              },
+            },
+          })
+        )
+      );
+    }
+    if (!prevProps.keplerGl.feinstaub && this.props.keplerGl.feinstaub) {
+      //console.log("data", this.state.data);
+      this.props.dispatch(
+        wrapTo(
+          "feinstaub",
+          addDataToMap({
+            datasets: [this.state.pm],
+            options: {
+              centerMap: true,
+            },
+            config: {
+              mapStyle: {
+                styleType: "dark",
               },
             },
           })
@@ -199,35 +289,35 @@ class App extends Component {
           <b>Klimadaten der senseBox-Fahrräder</b>
         </h1>
 
-        <Button buttonColor="#f8df81" onClick={() => this._openModal("foo")}>
+{/*        <Button buttonColor="#f8df81" onClick={() => this._openModal("heatmap")}>
           {" "}
           Heatmap🔥{" "}
-        </Button>
-        <Button buttonColor="#d5b6d5" onClick={() => this._openModal("foo")}>
+        </Button> */}
+{/*}        <Button buttonColor="#d5b6d5" onClick={() => this._openModal("beschleunigung")}>
           {" "}
           Beschleunigung🚲{" "}
-        </Button>
-        <Button buttonColor="#D7F4D2" onClick={() => this._openModal("foo")}>
+        </Button> */}
+        <Button buttonColor="#D7F4D2" onClick={() => this._openModal("luftfeuchte")}>
           {" "}
           Luftfeuchtigkeitssensor💧{" "}
         </Button>
-        <Button buttonColor="#f6b4bf" onClick={() => this._openModal("foo")}>
+        <Button buttonColor="#f6b4bf" onClick={() => this._openModal("temperatur")}>
           {" "}
           Temperatursensor🌡️{" "}
         </Button>
-        <Button buttonColor="#badfda" onClick={() => this._openModal("foo")}>
+        <Button buttonColor="#badfda" onClick={() => this._openModal("light")}>
           {" "}
           Beleuchtungsstärke⛅{" "}
         </Button>
-        <Button buttonColor="#c1bbdd" onClick={() => this._openModal("foo")}>
+        <Button buttonColor="#c1bbdd" onClick={() => this._openModal("uv")}>
           {" "}
           UV☀️{" "}
         </Button>
-        <Button buttonColor="#dab894" onClick={() => this._openModal("foo")}>
+{/*       <Button buttonColor="#dab894" onClick={() => this._openModal("pressure")}>
           {" "}
           Luftdruck🎈{" "}
-        </Button>
-        <Button buttonColor="#dcfffb" onClick={() => this._openModal("foo")}>
+        </Button>*/}
+        <Button buttonColor="#dcfffb" onClick={() => this._openModal("feinstaub")}>
           {" "}
           Feinstaub💨{" "}
         </Button>
@@ -239,8 +329,56 @@ class App extends Component {
         {/* <button onClick={() => this._openModal("bar")}>
           Show Kepler.gl id: bar
         </button> */}
-
-        <Modal isOpen={modal === "foo"} style={{ content: { padding: "0" } }}>
+{/*begin Modals*/}
+        <Modal isOpen={modal === "heatmap"} style={{ content: { padding: "0" } }}>
+          <div
+            style={{
+              display: "flex",
+              height: "50px",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+              padding: "10px",
+              backgroundColor: "rgba(168,168,189,46)",
+              fontFamily: "helvetica",
+              fontSize: "16px",
+            }}
+          >
+            Hier ist eine Heatmap der Temperatur
+            <Closebutton buttonColor="transparent" onClick={this._closeModal}>
+              ❌
+            </Closebutton>
+          </div>
+          <FreshMap
+            dispatch={this.props.dispatch}
+            mapboxApiAccessToken={MAPBOX_TOKEN}
+            id="heatmap"
+          />
+        </Modal>
+        <Modal isOpen={modal === "beschleunigung"} style={{ content: { padding: "0" } }}>
+          <div
+            style={{
+              display: "flex",
+              height: "50px",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+              padding: "10px",
+              backgroundColor: "rgba(168,168,189,46)",
+              fontFamily: "helvetica",
+              fontSize: "16px",
+            }}
+          >
+            Die Beschleunigung der Fahrräder
+            <Closebutton buttonColor="transparent" onClick={this._closeModal}>
+              ❌
+            </Closebutton>
+          </div>
+          <FreshMap
+            dispatch={this.props.dispatch}
+            mapboxApiAccessToken={MAPBOX_TOKEN}
+            id="beschleungigung"
+          />
+        </Modal>
+        <Modal isOpen={modal === "luftfeuchte"} style={{ content: { padding: "0" } }}>
           <div
             style={{
               display: "flex",
@@ -263,19 +401,129 @@ class App extends Component {
           <FreshMap
             dispatch={this.props.dispatch}
             mapboxApiAccessToken={MAPBOX_TOKEN}
-            id="foo"
+            id="luftfeuchte"
           />
         </Modal>
-        <Modal isOpen={modal === "bar"}>
-          <div>Luftfeuchte</div>
-          <button onClick={this._closeModal}>Close</button>
+        <Modal isOpen={modal === "temperatur"} style={{ content: { padding: "0" } }}>
+          <div
+            style={{
+              display: "flex",
+              height: "50px",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+              padding: "10px",
+              backgroundColor: "rgba(168,168,189,46)",
+              fontFamily: "helvetica",
+              fontSize: "16px",
+            }}
+          >
+            Die Umgebungstemperatur
+            <Closebutton buttonColor="transparent" onClick={this._closeModal}>
+              ❌
+            </Closebutton>
+          </div>
           <FreshMap
             dispatch={this.props.dispatch}
             mapboxApiAccessToken={MAPBOX_TOKEN}
-            id="bar"
+            id="temperatur"
           />
         </Modal>
-
+        <Modal isOpen={modal === "light"} style={{ content: { padding: "0" } }}>
+          <div
+            style={{
+              display: "flex",
+              height: "50px",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+              padding: "10px",
+              backgroundColor: "rgba(168,168,189,46)",
+              fontFamily: "helvetica",
+              fontSize: "16px",
+            }}
+          >
+            Beleuchtungsstärke
+            <Closebutton buttonColor="transparent" onClick={this._closeModal}>
+              ❌
+            </Closebutton>
+          </div>
+          <FreshMap
+            dispatch={this.props.dispatch}
+            mapboxApiAccessToken={MAPBOX_TOKEN}
+            id="light"
+          />
+        </Modal>
+        <Modal isOpen={modal === "uv"} style={{ content: { padding: "0" } }}>
+          <div
+            style={{
+              display: "flex",
+              height: "50px",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+              padding: "10px",
+              backgroundColor: "rgba(168,168,189,46)",
+              fontFamily: "helvetica",
+              fontSize: "16px",
+            }}
+          >
+          UV-Intensität 
+            <Closebutton buttonColor="transparent" onClick={this._closeModal}>
+              ❌
+            </Closebutton>
+          </div>
+          <FreshMap
+            dispatch={this.props.dispatch}
+            mapboxApiAccessToken={MAPBOX_TOKEN}
+            id="uv"
+          />
+        </Modal>
+        <Modal isOpen={modal === "pressure"} style={{ content: { padding: "0" } }}>
+          <div
+            style={{
+              display: "flex",
+              height: "50px",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+              padding: "10px",
+              backgroundColor: "rgba(168,168,189,46)",
+              fontFamily: "helvetica",
+              fontSize: "16px",
+            }}
+          >
+            Luftdruck
+            <Closebutton buttonColor="transparent" onClick={this._closeModal}>
+              ❌
+            </Closebutton>
+          </div>
+          <FreshMap
+            dispatch={this.props.dispatch}
+            mapboxApiAccessToken={MAPBOX_TOKEN}
+            id="pressure"
+          />
+        </Modal>
+        <Modal isOpen={modal === "feinstaub"} style={{ content: { padding: "0" } }}>
+          <div
+            style={{
+              display: "flex",
+              height: "50px",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+              padding: "10px",
+              backgroundColor: "rgba(168,168,189,46)",
+              fontFamily: "helvetica",
+              fontSize: "16px",
+            }}
+          >
+            Luftdruck
+            <Closebutton buttonColor="transparent" onClick={this._closeModal}>
+              ❌
+            </Closebutton>
+          </div>
+          <FreshMap
+            dispatch={this.props.dispatch}
+            mapboxApiAccessToken={MAPBOX_TOKEN}
+            id="feinstaub"
+          />
+        </Modal>
         {/* <Modal isOpen={modal === "bar"}>
           By passing in mint: false, This Kepler.gl instance will keep the state
           of "bar" even when it is unmounted.

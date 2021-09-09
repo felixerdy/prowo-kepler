@@ -45,7 +45,7 @@ export class DataService {
   }
   async getHistory(boxId, sensorId) {
     const historyReq = await fetch(
-      `https://api.opensensemap.org/boxes/${boxId}/data/${sensorId}?from-date=2021-08-15T23:50:50.52Z`
+      `https://api.opensensemap.org/boxes/${boxId}/data/${sensorId}?from-date=2021-09-09T00:00:00.00Z`
     );
 
     const history = await historyReq.json();
