@@ -24,7 +24,7 @@ import { addDataToMap, wrapTo } from "kepler.gl/actions";
 
 import Modal from "react-modal";
 import { showModal } from "./app-reducer";
-import sampleData from "./data/sample-data";
+import pm_config from "./data/pm_config";
 
 import FreshMap from "./components/fresh-map";
 import { DataService } from "./services/data-service";
@@ -33,6 +33,8 @@ import { processRowObject } from "kepler.gl/dist/processors";
 // import SavedMap from "./components/saved-map";
 
 import styled from "styled-components";
+import humidity_config from "./data/humidity_config";
+import temp_config from "./data/temp_config";
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 
 const Button = styled.button`
@@ -167,11 +169,7 @@ class App extends Component {
             options: {
               centerMap: true,
             },
-            config: {
-              mapStyle: {
-                styleType: "dark",
-              },
-            },
+            config: temp_config,
           })
         )
       );
@@ -186,11 +184,7 @@ class App extends Component {
             options: {
               centerMap: true,
             },
-            config: {
-              mapStyle: {
-                styleType: "dark",
-              },
-            },
+            config: humidity_config,
           })
         )
       );
@@ -243,11 +237,7 @@ class App extends Component {
             options: {
               centerMap: true,
             },
-            config: {
-              mapStyle: {
-                styleType: "dark",
-              },
-            },
+            config: pm_config,
           })
         )
       );
@@ -318,38 +308,44 @@ class App extends Component {
           Beschleunigung🚲{" "}
         </Button> */}
         <Button
-          buttonColor="#D7F4D2"
-          onClick={() => this._openModal("luftfeuchte")}
-        >
-          {" "}
-          Luftfeuchtigkeitssensor💧{" "}
-        </Button>
-        <Button
           buttonColor="#f6b4bf"
           onClick={() => this._openModal("temperatur")}
+          disabled={this.state?.temperatur?.data == undefined}
         >
-          {" "}
-          Temperatursensor🌡️{" "}
+          Temperatursensor🌡️
         </Button>
-        <Button buttonColor="#badfda" onClick={() => this._openModal("light")}>
-          {" "}
-          Beleuchtungsstärke⛅{" "}
+        <Button
+          buttonColor="#D7F4D2"
+          onClick={() => this._openModal("luftfeuchte")}
+          disabled={this.state?.humi?.data == undefined}
+        >
+          Luftfeuchtigkeitssensor💧
         </Button>
-        <Button buttonColor="#c1bbdd" onClick={() => this._openModal("uv")}>
-          {" "}
-          UV☀️{" "}
+        <Button
+          buttonColor="#dcfffb"
+          onClick={() => this._openModal("feinstaub")}
+          disabled={this.state?.pm?.data == undefined}
+        >
+          Feinstaub💨
+        </Button>
+        <Button
+          buttonColor="#badfda"
+          onClick={() => this._openModal("light")}
+          disabled={this.state?.light?.data == undefined}
+        >
+          Beleuchtungsstärke⛅
+        </Button>
+        <Button
+          buttonColor="#c1bbdd"
+          onClick={() => this._openModal("uv")}
+          disabled={this.state?.uv?.data == undefined}
+        >
+          UV☀️
         </Button>
         {/*       <Button buttonColor="#dab894" onClick={() => this._openModal("pressure")}>
           {" "}
           Luftdruck🎈{" "}
         </Button>*/}
-        <Button
-          buttonColor="#dcfffb"
-          onClick={() => this._openModal("feinstaub")}
-        >
-          {" "}
-          Feinstaub💨{" "}
-        </Button>
 
         <h4 style={{ color: "white", fontFamily: "helvetica" }}>
           Unsere Ergebnisse der Projektwoche am ifgi!
@@ -367,7 +363,7 @@ class App extends Component {
             style={{
               display: "flex",
               height: "50px",
-              justifyContent: "space-evenly",
+              justifyContent: "space-between",
               alignItems: "center",
               padding: "10px",
               backgroundColor: "rgba(168,168,189,46)",
@@ -394,7 +390,7 @@ class App extends Component {
             style={{
               display: "flex",
               height: "50px",
-              justifyContent: "space-evenly",
+              justifyContent: "space-between",
               alignItems: "center",
               padding: "10px",
               backgroundColor: "rgba(168,168,189,46)",
@@ -421,7 +417,7 @@ class App extends Component {
             style={{
               display: "flex",
               height: "50px",
-              justifyContent: "space-evenly",
+              justifyContent: "space-between",
               alignItems: "center",
               padding: "10px",
               backgroundColor: "rgba(168,168,189,46)",
@@ -450,7 +446,7 @@ class App extends Component {
             style={{
               display: "flex",
               height: "50px",
-              justifyContent: "space-evenly",
+              justifyContent: "space-between",
               alignItems: "center",
               padding: "10px",
               backgroundColor: "rgba(168,168,189,46)",
@@ -474,7 +470,7 @@ class App extends Component {
             style={{
               display: "flex",
               height: "50px",
-              justifyContent: "space-evenly",
+              justifyContent: "space-between",
               alignItems: "center",
               padding: "10px",
               backgroundColor: "rgba(168,168,189,46)",
@@ -498,7 +494,7 @@ class App extends Component {
             style={{
               display: "flex",
               height: "50px",
-              justifyContent: "space-evenly",
+              justifyContent: "space-between",
               alignItems: "center",
               padding: "10px",
               backgroundColor: "rgba(168,168,189,46)",
@@ -525,7 +521,7 @@ class App extends Component {
             style={{
               display: "flex",
               height: "50px",
-              justifyContent: "space-evenly",
+              justifyContent: "space-between",
               alignItems: "center",
               padding: "10px",
               backgroundColor: "rgba(168,168,189,46)",
@@ -552,7 +548,7 @@ class App extends Component {
             style={{
               display: "flex",
               height: "50px",
-              justifyContent: "space-evenly",
+              justifyContent: "space-between",
               alignItems: "center",
               padding: "10px",
               backgroundColor: "rgba(168,168,189,46)",
@@ -560,7 +556,7 @@ class App extends Component {
               fontSize: "16px",
             }}
           >
-            Luftdruck
+            Feinstaub
             <Closebutton buttonColor="transparent" onClick={this._closeModal}>
               ❌
             </Closebutton>
