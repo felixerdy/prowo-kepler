@@ -213,7 +213,11 @@ class App extends Component {
         </Button>
         <Button buttonColor="#badfda" onClick={() => this._openModal("foo")}>
           {" "}
-          UV und Beleuchtungsstärke☀️{" "}
+          Beleuchtungsstärke⛅{" "}
+        </Button>
+        <Button buttonColor="#c1bbdd" onClick={() => this._openModal("foo")}>
+          {" "}
+          UV☀️{" "}
         </Button>
         <Button buttonColor="#dab894" onClick={() => this._openModal("foo")}>
           {" "}
