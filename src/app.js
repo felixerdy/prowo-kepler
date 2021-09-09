@@ -28,6 +28,8 @@ import sampleData from "./data/sample-data";
 
 import FreshMap from "./components/fresh-map";
 import { DataService } from "./services/data-service";
+import { processRowObject } from "kepler.gl/dist/processors";
+
 // import SavedMap from "./components/saved-map";
 
 import styled from "styled-components";
@@ -75,42 +77,72 @@ transition: all 1s;
 
 
 class App extends Component {
-  componentDidMount() {
+  async componentDidMount() {
+    const dataService = new DataService();
+    const nameData = await dataService.getName(
+      "6139b33384c610001ca8efd4"
+    );
+    const keplerglhumidata = await dataService.dataService(["6139b33384c610001ca8efd4","6138914684c610001c260ef5"],"rel. Luftfeuchte");
+    const keplergltempdata = await dataService.dataService(["6139b33384c610001ca8efd4","6138914684c610001c260ef5"],"Temperatur");
+  
     this.setState({
-      dataService: new DataService(),
+      data1: { 
+        info: {
+          label: "Temperatur",
+          id: "temp_map",
+        },
+        data: processRowObject(keplergltempdata),
+      },
+      data2: {
+        info: {
+          label: "Luftfeuchte",
+          id: "humi_map",
+        },
+        data: processRowObject(keplerglhumidata),
+      },
     });
   }
 
   async componentDidUpdate(prevProps) {
-    console.log(this.state);
-    if (this.state.dataService) {
-      const data = await this.state.dataService.getData(
-        "60c756b948c4b3001b68fb97"
+    if (!prevProps.keplerGl.foo && this.props.keplerGl.foo) {
+      //console.log("data", this.state.data);
+      this.props.dispatch(
+        wrapTo(
+          "foo",
+          addDataToMap({
+            datasets: [this.state.data1],
+            options: {
+              centerMap: true,
+            },
+            config: {
+              mapStyle: {
+                styleType: "dark",
+              },
+
+            },
+          })
+        )
       );
-      console.log(data);
-      const sensors = await this.state.dataService.listAllSensors(
-        "60c756b948c4b3001b68fb97"
-      );
-      console.log(sensors);
     }
-    // if (!prevProps.keplerGl.bar && this.props.keplerGl.bar) {
-    //   this.props.dispatch(
-    //     wrapTo(
-    //       "bar",
-    //       addDataToMap({
-    //         datasets: sampleData,
-    //         options: {
-    //           centerMap: true,
-    //         },
-    //         config: {
-    //           mapStyle: {
-    //             styleType: "light",
-    //           },
-    //         },
-    //       })
-    //     )
-    //   );
-    // }
+    if (!prevProps.keplerGl.bar && this.props.keplerGl.bar) {
+      //console.log("data", this.state.data);
+      this.props.dispatch(
+        wrapTo(
+          "bar",
+          addDataToMap({
+            datasets: [this.state.data2],
+            options: {
+              centerMap: true,
+            },
+            config: {
+              mapStyle: {
+                styleType: "light",
+              },
+            },
+          })
+        )
+      );
+    }
   }
   _closeModal = () => {
     this.props.dispatch(showModal(null));
@@ -150,7 +182,6 @@ class App extends Component {
         Unsere Ergebnisse der Projektwoche am ifgi!
         </h4>
 
-
         {/* <button onClick={() => this._openModal("bar")}>
           Show Kepler.gl id: bar
         </button> */}
@@ -167,6 +198,17 @@ class App extends Component {
             dispatch={this.props.dispatch}
             mapboxApiAccessToken={MAPBOX_TOKEN}
             id="foo"
+          />
+        </Modal>
+        <Modal isOpen={modal === "bar"}>
+          <div>
+            Luftfeuchte
+          </div>
+          <button onClick={this._closeModal}>Close</button>
+          <FreshMap
+            dispatch={this.props.dispatch}
+            mapboxApiAccessToken={MAPBOX_TOKEN}
+            id="bar"
           />
         </Modal>
 

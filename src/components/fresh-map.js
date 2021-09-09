@@ -27,20 +27,7 @@ import sampleData from "../data/sample-data";
 import config from "../configurations/config";
 
 export default class FreshMap extends Component {
-  componentDidMount() {
-    this.props.dispatch(
-      wrapTo(
-        this.props.id,
-        addDataToMap({
-          datasets: sampleData,
-          options: {
-            centerMap: true,
-          },
-          config,
-        })
-      )
-    );
-  }
+  
 
   render() {
     const { mapboxApiAccessToken, id } = this.props;
