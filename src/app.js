@@ -38,13 +38,13 @@ class App extends Component {
   async componentDidMount() {
     const dataService = new DataService();
     const nameData = await dataService.getName(
-      "60c756b948c4b3001b68fb97"
+      "6139b33384c610001ca8efd4"
     );
-    const keplerglhumidata = await dataService.dataService("6139b33384c610001ca8efd4",nameData,"rel. Luftfeuchte");
-    const keplergltempdata = await dataService.dataService("6139b33384c610001ca8efd4",nameData,"Temperatur");
+    const keplerglhumidata = await dataService.dataService(["6139b33384c610001ca8efd4","6138914684c610001c260ef5"],"rel. Luftfeuchte");
+    const keplergltempdata = await dataService.dataService(["6139b33384c610001ca8efd4","6138914684c610001c260ef5"],"Temperatur");
   
     this.setState({
-      data1: {
+      data1: { 
         info: {
           label: "Temperatur",
           id: "temp_map",
@@ -68,7 +68,27 @@ class App extends Component {
         wrapTo(
           "foo",
           addDataToMap({
-            datasets: [this.state.data1,this.state.data2],
+            datasets: [this.state.data1],
+            options: {
+              centerMap: true,
+            },
+            config: {
+              mapStyle: {
+                styleType: "dark",
+              },
+
+            },
+          })
+        )
+      );
+    }
+    if (!prevProps.keplerGl.bar && this.props.keplerGl.bar) {
+      //console.log("data", this.state.data);
+      this.props.dispatch(
+        wrapTo(
+          "bar",
+          addDataToMap({
+            datasets: [this.state.data2],
             options: {
               centerMap: true,
             },
@@ -100,21 +120,33 @@ class App extends Component {
         <button onClick={() => this._openModal("foo")}>
           Show Kepler.gl id: foo
         </button>
+        <button onClick={() => this._openModal("bar")}>
+          Show Kepler.gl id: bar
+        </button>
         {/* <button onClick={() => this._openModal("bar")}>
           Show Kepler.gl id: bar
         </button> */}
 
         <Modal isOpen={modal === "foo"}>
           <div>
-            This Kepler.gl component will always load a fresh state when re
-            mounted, state inside this component will be destroyed once its
-            unmounted.
+            Temperatur
           </div>
           <button onClick={this._closeModal}>Close</button>
           <FreshMap
             dispatch={this.props.dispatch}
             mapboxApiAccessToken={MAPBOX_TOKEN}
             id="foo"
+          />
+        </Modal>
+        <Modal isOpen={modal === "bar"}>
+          <div>
+            Luftfeuchte
+          </div>
+          <button onClick={this._closeModal}>Close</button>
+          <FreshMap
+            dispatch={this.props.dispatch}
+            mapboxApiAccessToken={MAPBOX_TOKEN}
+            id="bar"
           />
         </Modal>
 

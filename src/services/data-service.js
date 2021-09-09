@@ -67,20 +67,24 @@ export class DataService {
     }
     return dataOut;
   }
-  async dataService(boxId,boxName,keyword){
+  async dataService(boxIds = [],keyword){
+    let data = [];
+    for(let i = 0; i < boxIds.length;i++){
+
     const sensors = await this.listAllSensors(
-      boxId
+      boxIds[i]
     );
-    
-    const names = await this.listAllSensorNames(boxId);
+    const boxName = await this.getName(boxIds[i]);
+    const names = await this.listAllSensorNames(boxIds[i]);
     const index = await this.sortByKeyword(names,keyword);
     const tempData = await this.getHistory(
-      boxId,
+      boxIds[i],
       sensors[index]
     );
-    const data = await this.formatDataForKepler(tempData,boxName);
-
-
+    data = [...data, ...await this.formatDataForKepler(tempData,boxName)];
+//    console.log("data to Kepler",data);
+    
+  }
     return data;
   }
 }
