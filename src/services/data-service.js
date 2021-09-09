@@ -29,6 +29,20 @@ export class DataService {
     }
     return boxSensors;
   }
+  async listAllSensorNames(boxId) {
+    const boxData = await this.fetchData(boxId);
+    let names = [];
+    for (let i = 0; i < boxData.sensors.length; i++){
+      names.push(boxData.sensors[i].title);
+    }
+    return names;
+  }
+  async sortByKeyword(names,keyword){
+    let indexFound = 0;
+    indexFound = names.indexOf(keyword);
+    console.log(indexFound);
+    return indexFound;
+  }
   async getHistory(boxId, sensorId) {
     const historyReq = await fetch(
       `https://api.opensensemap.org/boxes/${boxId}/data/${sensorId}?from-date=2021-08-15T23:50:50.52Z`
@@ -38,11 +52,13 @@ export class DataService {
 
     return history;
   }
-  async formatDataForKepler(dataIn) {
+  async formatDataForKepler(dataIn, boxName) {
     // console.log(dataIn);
     let dataOut = [];
     for (let i = 0; i < dataIn.length; i++) {
       dataOut.push({
+        name: boxName,
+        timestamp: dataIn[i].createdAt,
         lat: dataIn[i].location[1],
         lng: dataIn[i].location[0],
         value: Number(dataIn[i].value),
@@ -51,16 +67,25 @@ export class DataService {
     }
     return dataOut;
   }
-  async dataService(boxId){
-    const sensors = await this.listAllSensors(
-      boxId
-    );
-    const tempData = await this.getHistory(
-      boxId,
-      sensors[0]
-    );
-    const data = await this.formatDataForKepler(tempData);
+  async dataService(boxIds = [],keyword){
+    let data = [];
+    for(let i = 0; i < boxIds.length;i++){
 
+    const sensors = await this.listAllSensors(
+      boxIds[i]
+    );
+    const boxName = await this.getName(boxIds[i]);
+    const names = await this.listAllSensorNames(boxIds[i]);
+    const index = await this.sortByKeyword(names,keyword);
+    const tempData = await this.getHistory(
+      boxIds[i],
+      sensors[index]
+    );
+    data = [...data, ...await this.formatDataForKepler(tempData,boxName)];
+//    console.log("data to Kepler",data);
+    
+  }
     return data;
   }
 }
+
