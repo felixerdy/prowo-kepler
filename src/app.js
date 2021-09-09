@@ -207,9 +207,13 @@ class App extends Component {
           {" "}
           Beschleunigung🚲{" "}
         </Button>
+        <Button buttonColor="#D7F4D2" onClick={() => this._openModal("foo")}>
+          {" "}
+          Luftfeuchtigkeitssensor💧{" "}
+        </Button>
         <Button buttonColor="#f6b4bf" onClick={() => this._openModal("foo")}>
           {" "}
-          Temperatur- und Luftfeuchtigkeitssensor🌡️{" "}
+          Temperatursensor🌡️{" "}
         </Button>
         <Button buttonColor="#badfda" onClick={() => this._openModal("foo")}>
           {" "}
