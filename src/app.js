@@ -60,6 +60,7 @@ border-radius: 16px;
 margin: 5px;
 font-size: 20px;
 font-weight: bold;
+transition: all 1s;
 
 &:hover{
   background-color: transparent;
