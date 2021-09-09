@@ -40,27 +40,35 @@ class App extends Component {
     const nameData = await dataService.getName(
       "60c756b948c4b3001b68fb97"
     );
-    const keplergldata = await dataService.dataService("60c756b948c4b3001b68fb97");
-
+    const keplerglhumidata = await dataService.dataService("6139b33384c610001ca8efd4",nameData,"rel. Luftfeuchte");
+    const keplergltempdata = await dataService.dataService("6139b33384c610001ca8efd4",nameData,"Temperatur");
+  
     this.setState({
-      data: {
+      data1: {
         info: {
-          label: nameData,
-          id: "bike box",
+          label: "Temperatur",
+          id: "temp_map",
         },
-        data: processRowObject(keplergldata),
+        data: processRowObject(keplergltempdata),
+      },
+      data2: {
+        info: {
+          label: "Luftfeuchte",
+          id: "humi_map",
+        },
+        data: processRowObject(keplerglhumidata),
       },
     });
   }
 
   async componentDidUpdate(prevProps) {
     if (!prevProps.keplerGl.foo && this.props.keplerGl.foo) {
-      console.log("data", this.state.data);
+      //console.log("data", this.state.data);
       this.props.dispatch(
         wrapTo(
           "foo",
           addDataToMap({
-            datasets: this.state.data,
+            datasets: [this.state.data1,this.state.data2],
             options: {
               centerMap: true,
             },
