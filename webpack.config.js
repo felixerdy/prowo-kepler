@@ -25,6 +25,7 @@
 const resolve = require("path").resolve;
 const join = require("path").join;
 const webpack = require("webpack");
+const CopyPlugin = require("copy-webpack-plugin");
 
 const CONFIG = {
   // bundle app.js and everything it imports, recursively.
@@ -55,7 +56,12 @@ const CONFIG = {
   },
 
   // Optional: Enables reading mapbox token from environment variable
-  plugins: [new webpack.EnvironmentPlugin(["MapboxAccessToken"])],
+  plugins: [
+    new webpack.EnvironmentPlugin(["MapboxAccessToken"]),
+    new CopyPlugin({
+      patterns: [{ from: "./index.html", to: "" }],
+    }),
+  ],
 };
 
 // This line enables bundling against src in this repo rather than installed deck.gl module
