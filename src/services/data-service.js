@@ -16,10 +16,9 @@ export class DataService {
   async getName(boxId) {
     const data = await this.fetchData(boxId);
     const name = data.name;
-    
+
     return name;
   }
-
 
   async listAllSensors(boxId) {
     const boxData = await this.fetchData(boxId);
@@ -32,12 +31,12 @@ export class DataService {
   async listAllSensorNames(boxId) {
     const boxData = await this.fetchData(boxId);
     let names = [];
-    for (let i = 0; i < boxData.sensors.length; i++){
+    for (let i = 0; i < boxData.sensors.length; i++) {
       names.push(boxData.sensors[i].title);
     }
     return names;
   }
-  async sortByKeyword(names,keyword){
+  async sortByKeyword(names, keyword) {
     let indexFound = 0;
     indexFound = names.indexOf(keyword);
     console.log(indexFound);
@@ -67,25 +66,23 @@ export class DataService {
     }
     return dataOut;
   }
-  async dataService(boxIds = [],keyword){
+  async dataService(boxIds = [], keywords) {
     let data = [];
-    for(let i = 0; i < boxIds.length;i++){
-
-    const sensors = await this.listAllSensors(
-      boxIds[i]
-    );
-    const boxName = await this.getName(boxIds[i]);
-    const names = await this.listAllSensorNames(boxIds[i]);
-    const index = await this.sortByKeyword(names,keyword);
-    const tempData = await this.getHistory(
-      boxIds[i],
-      sensors[index]
-    );
-    data = [...data, ...await this.formatDataForKepler(tempData,boxName)];
-//    console.log("data to Kepler",data);
-    
-  }
+    for (let i = 0; i < boxIds.length; i++) {
+      const sensors = await this.listAllSensors(boxIds[i]);
+      const boxName = await this.getName(boxIds[i]);
+      const names = await this.listAllSensorNames(boxIds[i]);
+      for (let keyword of keywords) {
+        console.log(keyword);
+        const index = await this.sortByKeyword(names, keyword);
+        const tempData = await this.getHistory(boxIds[i], sensors[index]);
+        data = [
+          ...data,
+          ...(await this.formatDataForKepler(tempData, boxName)),
+        ];
+      }
+      //    console.log("data to Kepler",data);
+    }
     return data;
   }
 }
-
