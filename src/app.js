@@ -425,9 +425,7 @@ class App extends Component {
               fontSize: "16px",
             }}
           >
-            This Kepler.gl component will always load a fresh state when re
-            mounted, state inside this component will be destroyed once its
-            unmounted.
+            Die Luftfeuchte
             <Closebutton buttonColor="transparent" onClick={this._closeModal}>
               ❌
             </Closebutton>
@@ -556,7 +554,7 @@ class App extends Component {
               fontSize: "16px",
             }}
           >
-            Feinstaub
+           Die Feinstaubbelastung, gemessen in PM2.5.
             <Closebutton buttonColor="transparent" onClick={this._closeModal}>
               ❌
             </Closebutton>
