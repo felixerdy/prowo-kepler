@@ -84,8 +84,9 @@ class App extends Component {
         "6138914684c610001c260ef5",
         "6138911084c610001c25f671",
         "6139b3e984c610001ca940f8",
+        "60c756b948c4b3001b68fb97",
       ],
-      "rel. Luftfeuchte"
+      ["rel. Luftfeuchte", "rel. Luftfeuchtigkeit"]
     );
     const keplergltempdata = await dataService.dataService(
       [
@@ -93,8 +94,9 @@ class App extends Component {
         "6138914684c610001c260ef5",
         "6138911084c610001c25f671",
         "6139b3e984c610001ca940f8",
+        "60c756b948c4b3001b68fb97",
       ],
-      "Temperatur"
+      ["Temperatur"]
     );
     const keplergluvdata = await dataService.dataService(
       [
@@ -102,8 +104,9 @@ class App extends Component {
         "6138914684c610001c260ef5",
         "6138911084c610001c25f671",
         "6139b3e984c610001ca940f8",
+        "60c756b948c4b3001b68fb97",
       ],
-      "UV-Intensität"
+      ["UV-Intensität"]
     );
     const keplergllightdata = await dataService.dataService(
       [
@@ -111,12 +114,13 @@ class App extends Component {
         "6138914684c610001c260ef5",
         "6138911084c610001c25f671",
         "6139b3e984c610001ca940f8",
+        "60c756b948c4b3001b68fb97",
       ],
-      "Beleuchtungsstärke"
+      ["Beleuchtungsstärke"]
     );
     const keplerglpmdata = await dataService.dataService(
-      ["6139b33384c610001ca8efd4"],
-      "PM2.5"
+      ["6139b33384c610001ca8efd4", "60c756b948c4b3001b68fb97"],
+      ["PM2.5", "PM25", "Feinstaub PM2.5"]
     );
 
     this.setState({
