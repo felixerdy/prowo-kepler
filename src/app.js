@@ -83,7 +83,7 @@ class App extends Component {
         "6139b33384c610001ca8efd4",
         "6138914684c610001c260ef5",
         // "6138911084c610001c25f671",
-        "6139b3e984c610001ca940f8",
+        // "6139b3e984c610001ca940f8",
         "60c756b948c4b3001b68fb97",
       ],
       ["rel. Luftfeuchte", "rel. Luftfeuchtigkeit"]
@@ -93,7 +93,7 @@ class App extends Component {
         "6139b33384c610001ca8efd4",
         "6138914684c610001c260ef5",
         // "6138911084c610001c25f671",
-        "6139b3e984c610001ca940f8",
+        // "6139b3e984c610001ca940f8",
         "60c756b948c4b3001b68fb97",
       ],
       ["Temperatur"]
@@ -103,7 +103,7 @@ class App extends Component {
         "6139b33384c610001ca8efd4",
         "6138914684c610001c260ef5",
         // "6138911084c610001c25f671",
-        "6139b3e984c610001ca940f8",
+        // "6139b3e984c610001ca940f8",
         "60c756b948c4b3001b68fb97",
       ],
       ["UV-Intensität"]
@@ -113,7 +113,7 @@ class App extends Component {
         "6139b33384c610001ca8efd4",
         "6138914684c610001c260ef5",
         // "6138911084c610001c25f671",
-        "6139b3e984c610001ca940f8",
+        // "6139b3e984c610001ca940f8",
         "60c756b948c4b3001b68fb97",
       ],
       ["Beleuchtungsstärke"]
@@ -558,7 +558,7 @@ class App extends Component {
               fontSize: "16px",
             }}
           >
-           Die Feinstaubbelastung, gemessen in PM2.5.
+            Die Feinstaubbelastung, gemessen in PM2.5.
             <Closebutton buttonColor="transparent" onClick={this._closeModal}>
               ❌
             </Closebutton>

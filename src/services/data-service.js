@@ -43,6 +43,7 @@ export class DataService {
     return indexFound;
   }
   async getHistory(boxId, sensorId) {
+    if (!sensorId || !boxId) return;
     const historyReq = await fetch(
       `https://api.opensensemap.org/boxes/${boxId}/data/${sensorId}?from-date=2021-09-09T08:25:00.00Z`
     );
@@ -52,6 +53,7 @@ export class DataService {
     return history;
   }
   async formatDataForKepler(dataIn, boxName) {
+    if (!dataIn) return;
     // console.log(dataIn);
     let dataOut = [];
     for (let i = 0; i < dataIn.length; i++) {
@@ -76,6 +78,8 @@ export class DataService {
         console.log(keyword);
         const index = await this.sortByKeyword(names, keyword);
         const tempData = await this.getHistory(boxIds[i], sensors[index]);
+
+        if (!tempData) continue;
         data = [
           ...data,
           ...(await this.formatDataForKepler(tempData, boxName)),
